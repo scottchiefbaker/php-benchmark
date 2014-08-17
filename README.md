@@ -21,8 +21,8 @@ $bm = new benchmark;
 
 // Run the benchmark on each function
 // $bm->time_this(name, anonymous function, array of arguments to pass);
-$bm->time_this('strtoupper',$a,array('kittens'));
-$bm->time_this('strtolower',$b,array('KITTENS'));
+$bm->time_this('Convert to Uppercase',$a,array('kittens'));
+$bm->time_this('Convert to Lowercase',$b,array('KITTENS'));
 
 // Print out the summary of the benchmarks we've run
 $bm->html_summary();
