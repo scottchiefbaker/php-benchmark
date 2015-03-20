@@ -24,6 +24,88 @@ class benchmark {
 		$this->results['return'][$name] = $ret;
 	}
 
+	public function summary() {
+		if (php_sapi_name() === 'cli') {
+			$this->text_summary();
+		} else {
+			$this->html_summary();
+		}
+	}
+
+	public function text_summary() {
+		if (sizeof($this->results['count']) === 0) {
+			print "No results found";
+			return false;
+		}
+
+		arsort($this->results['count']);
+
+		$test_names = array_keys($this->results['count']);
+
+		$max_len   = 0;
+		$total_len = 0;
+		foreach ($test_names as $name) {
+			$total_len += strlen($name);
+			if (strlen($name) > $max_len) {
+				$max_len = strlen($name);
+			}
+		}
+
+		##############################################
+
+		print str_repeat(" ",$max_len + 4);
+		print join(" | ",$test_names) . "\n";
+		$bar = str_repeat(" ",$max_len + 2) . str_repeat("-",$total_len + 10) . "\n";
+		print $bar;
+
+		foreach($test_names as $y_name) {
+			printf(" %{$max_len}s |",$y_name);
+			foreach ($test_names as $x_name) {
+				$x_val     = $this->results['count'][$x_name];
+				$y_val     = $this->results['count'][$y_name];
+				$percent   = round(($y_val / $x_val) * 100,2) . "%";
+				$col_width = strlen($x_name) + 1;
+
+				if ($y_val == $x_val) {
+					$percent = "N/A";
+				}
+
+				//printf(" %{$col_width}s",$percent);
+				printf("%{$col_width}s |","$percent");
+			}
+
+			print "\n";
+		}
+		print $bar;
+
+		print "\n";
+		$max_len += 1;
+
+		$expected_results = reset($this->results['return']);
+
+		//print_r($this->results['count']);
+		foreach($test_names as $name) {
+			$count = $this->results['count'][$name];
+			$ret   = $this->results['return'][$name];
+
+			if ($this->include_sample_output) {
+				printf(" %s = %d interations per second\n",$name,$count);
+
+				if ($this->show_differences && ($ret !== $expected_results)) {
+					print "    ** Return value from this function differs from the first test **\n";
+				}
+
+				$print_r_output = trim(print_r($ret,true));
+
+				$print_r_output = preg_replace("/^/m","       ",$print_r_output);
+
+				print "    Sample output: \n$print_r_output\n\n";
+			} else {
+				printf("%{$max_len}s = %d interations per second\n",$name,$count);
+			}
+		}
+	}
+
 	public function html_summary() {
 		if (sizeof($this->results['count']) === 0) {
 			print "<div>No results found</div>";

@@ -25,5 +25,5 @@ $bm->time_this('Convert to Uppercase',$a,array('kittens'));
 $bm->time_this('Convert to Lowercase',$b,array('KITTENS'));
 
 // Print out the summary of the benchmarks we've run
-$bm->html_summary();
+$bm->summary();
 ```
