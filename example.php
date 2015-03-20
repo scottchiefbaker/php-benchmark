@@ -33,4 +33,4 @@ $bm->time_this('scott_split',$c,array($str));
 $bm->time_this('reddit_split',$d,array($str));
 
 // Print out the summary of the benchmarks we've run
-$bm->html_summary();
+$bm->summary();

@@ -35,4 +35,4 @@ $bm->time_this('JSON Encode',$b,[$hash]);
 $bm->time_this('var_export()',$c,[$hash]);
 
 // // Print out the summary of the benchmarks we've run
-$bm->html_summary();
+$bm->summary();
