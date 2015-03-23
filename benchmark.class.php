@@ -38,6 +38,9 @@ class benchmark {
 			return false;
 		}
 
+		$php_version = phpversion();
+		print "PHP Version: $php_version\n\n";
+
 		arsort($this->results['count']);
 
 		$test_names = array_keys($this->results['count']);
@@ -118,8 +121,11 @@ class benchmark {
 		array_unshift($tests,'&nbsp;');
 		$first = 1;
 
+		$php_version = phpversion();
+		$out = "<h4>PHP Version: $php_version</h4>\n";
+
 		$header_color = '#CCE6FF';
-		$out = "<table style=\"border-collapse: collapse; border: 1px solid black;\">\n";
+		$out .= "<table style=\"border-collapse: collapse; border: 1px solid black;\">\n";
 		$x = 0;
 		foreach ($tests as $name) {
 			$out .= "\t<tr>\n";
