@@ -48,7 +48,13 @@ class benchmark {
 		$max_len   = 0;
 		$total_len = 0;
 		foreach ($test_names as $name) {
-			$total_len += strlen($name);
+			// Minimum allowed length for alignment is 8 in text mode
+			$len = strlen($name);
+			if ($len < 8) {
+				$len = 8;
+			}
+
+			$total_len += $len;
 			if (strlen($name) > $max_len) {
 				$max_len = strlen($name);
 			}
@@ -56,9 +62,13 @@ class benchmark {
 
 		##############################################
 
-		print str_repeat(" ",$max_len + 4);
-		print join(" | ",$test_names) . "\n";
+		print str_repeat(" ",$max_len + 4); // Indent
 
+		$pad_names = $test_names;
+		foreach ($pad_names as &$i) {
+			$i = sprintf("%8s",$i);
+		}
+		print join(" | ",$pad_names) . "\n";
 
 		// The length of the bar is the total length of the test names,
 		// plus the " | " between each word test pair,
@@ -73,6 +83,8 @@ class benchmark {
 				$x_val     = $this->results['count'][$x_name];
 				$y_val     = $this->results['count'][$y_name];
 				$percent   = round(($y_val / $x_val) * 100,2) . "%";
+
+				$x_name = sprintf("%8s",$x_name);
 				$col_width = strlen($x_name) + 1;
 
 				if ($y_val == $x_val) {
