@@ -74,7 +74,7 @@ class benchmark {
 		// plus the " | " between each word test pair,
 		// plus four because there are two spaces at the start and end
 		$additional = (sizeof($test_names) - 1) * 3;
-		$bar = str_repeat(" ",$max_len + 2) . str_repeat("-",$total_len + $additional + 4) . "\n";
+		$bar = str_repeat(" ",$max_len + 2) . "+" . str_repeat("-",$total_len + $additional + 2) . "+\n";
 		print $bar;
 
 		foreach($test_names as $y_name) {
