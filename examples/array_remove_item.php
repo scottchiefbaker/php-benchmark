@@ -1,6 +1,6 @@
 <?PHP
 
-require("../benchmark.class.php");
+require(dirname(__FILE__) . "/../benchmark.class.php");
 
 $a = function($ids) {
 	$ids = array_diff($ids,array(87));

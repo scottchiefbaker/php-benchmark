@@ -1,6 +1,9 @@
 <?PHP
 
-require('../benchmark.class.php');
+require(dirname(__FILE__) . "/../benchmark.class.php");
+
+//////////////////////////////////////////////////////////////
+
 $bm = new benchmark;
 $bm->include_sample_output = 0;
 
