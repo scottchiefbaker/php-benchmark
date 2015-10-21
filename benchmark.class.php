@@ -143,27 +143,30 @@ class benchmark {
 		$out = "<h4>PHP Version: $php_version</h4>\n";
 
 		$header_color = '#CCE6FF';
-		$out .= "<table style=\"border-collapse: collapse; border: 1px solid black;\">\n";
+		$out .= "<table style=\"border-collapse: collapse; border: 1px solid black; width: 100%;\">\n";
 		$x = 0;
 		foreach ($tests as $name) {
 			$out .= "\t<tr>\n";
 
+			// If it's the first row, output all the headers
 			if ($first) {
 				foreach ($tests as $i) {
-					$out .= "\t\t<td style=\"text-align: center; font-weight: bold; background-color: $header_color; border: 1px solid black; width: 10em;\">$i</td>\n";
+					$out .= "\t\t<td style=\"white-space: nowrap; text-align: center; font-weight: bold; background-color: $header_color; border: 1px solid black; width: 10em;\">$i</td>\n";
 				}
 
 				$first = 0;
+			// It's not the first row so loop through outputting each data cell
 			} else {
 				$column = 0;
 				$y = 0;
 				foreach ($tests as $i) {
+					// If it's the first column, it's the row header (on the left)
 					if ($column == 0) {
 						$content = $tests[$x + 1];
+						$color   = $header_color;
 						$align   = 'right';
+						$fw      = 'bold';
 						$x++;
-						$color = $header_color;
-						$fw = 'bold';
 					} else {
 						$y++;
 
@@ -175,18 +178,22 @@ class benchmark {
 
 						$percentage = sprintf("%.2f%%",($a / $b) * 100);
 
+						$color = 'white';
+						$align = 'center';
+						$fw    = 'normal';
+
+						// Row/Column are the same so we output n/a
 						if ($x === $y) {
-							$content = '<div style="background-color: #FF9999;">N/A</div>';
+							$color   = "#FF9999";
+							$content = "<b>n/a</b>";
+						// It's a legit data point
 						} else {
 							$content = "$percentage";
 						}
-
-						$align   = 'center';
-						$color = 'white';
-						$fw = 'normal';
 					}
 
-					$out .= "\t\t<td style=\"background-color: $color; font-weight: $fw; text-align: $align; border: 1px solid black; width: 10em;\">$content</td>\n";
+					// Output each data cell
+					$out .= "\t\t<td style=\"white-space: nowrap; background-color: $color; font-weight: $fw; text-align: $align; border: 1px solid black; width: 10em;\">$content</td>\n";
 
 					$column++;
 				}
@@ -202,17 +209,10 @@ class benchmark {
 		$expected_results = reset($this->results['return']);
 
 		foreach ($this->results['count'] as $test => $speed) {
-			if ($speed == $fastest) {
-				$extra = "(Fastest)";
-			} elseif ($speed == $slowest) {
-				$extra = "(Slowest)";
-			} else {
-				$extra = '';
-			}
-
 			$ret = $this->results['return'][$test];
 
-			$out .= "<div><b>$test</b> = $speed iterations per second $extra</div>";
+			$speed_str = number_format($speed);
+			$out .= "<div><b>$test</b> = $speed_str iterations per second</div>";
 
 			if ($this->show_differences && ($ret !== $expected_results)) {
 				$out .= "<div style=\"margin: 0 0 1em 2em; \"><span style=\"color: red;\"><b>Note:</b></span> Return value from this function differs from the first test</div>\n";
