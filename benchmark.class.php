@@ -110,7 +110,7 @@ class benchmark {
 			$ret   = $this->results['return'][$name];
 
 			if ($this->include_sample_output) {
-				printf(" %s = %d interations per second\n",$name,$count);
+				printf(" %s = %s iterations per second\n",$name,number_format($count));
 
 				if ($this->show_differences && ($ret !== $expected_results)) {
 					print "    ** Return value from this function differs from the first test **\n";
@@ -122,7 +122,7 @@ class benchmark {
 
 				print "    Sample output: \n$print_r_output\n\n";
 			} else {
-				printf("%{$max_len}s = %d interations per second\n",$name,$count);
+				printf("%{$max_len}s = %s iterations per second\n",$name,number_format($count));
 			}
 		}
 	}
