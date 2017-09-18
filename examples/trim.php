@@ -57,7 +57,7 @@ $d = function($i) {
 $bm->time_this('trim',$a,[$str]);
 $bm->time_this('regexp',$b,[$str]);
 $bm->time_this('find + substr',$c,[$str]);
-$bm->time_this('rtrim + ltrim',$c,[$str]);
+$bm->time_this('rtrim + ltrim',$d,[$str]);
 
 // // Print out the summary of the benchmarks we've run
 $bm->summary();
