@@ -24,8 +24,8 @@ class benchmark {
 		$this->results['return'][$name] = $ret;
 	}
 
-	public function summary() {
-		if (php_sapi_name() === 'cli') {
+	public function summary($type = "") {
+		if ($type != "html" && php_sapi_name() === 'cli') {
 			$this->text_summary();
 		} else {
 			$this->html_summary();
