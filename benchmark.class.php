@@ -140,7 +140,7 @@ class benchmark {
 		$first = 1;
 
 		$php_version = phpversion();
-		$out = "<h4>PHP Version: $php_version</h4>\n";
+		$out = "<h2>PHP Version: $php_version</h2>\n";
 
 		$header_color = '#CCE6FF';
 		$out .= "<table style=\"border-collapse: collapse; border: 1px solid black; width: 100%;\">\n";
@@ -151,7 +151,7 @@ class benchmark {
 			// If it's the first row, output all the headers
 			if ($first) {
 				foreach ($tests as $i) {
-					$out .= "\t\t<td style=\"white-space: nowrap; text-align: center; font-weight: bold; background-color: $header_color; border: 1px solid black; width: 10em;\">$i</td>\n";
+					$out .= "\t\t<td style=\"padding: 5px; white-space: nowrap; text-align: center; font-weight: bold; background-color: $header_color; border: 1px solid black; width: 10em;\">$i</td>\n";
 				}
 
 				$first = 0;
@@ -193,7 +193,7 @@ class benchmark {
 					}
 
 					// Output each data cell
-					$out .= "\t\t<td style=\"white-space: nowrap; background-color: $color; font-weight: $fw; text-align: $align; border: 1px solid black; width: 10em;\">$content</td>\n";
+					$out .= "\t\t<td style=\"padding: 5px; white-space: nowrap; background-color: $color; font-weight: $fw; text-align: $align; border: 1px solid black; width: 10em;\">$content</td>\n";
 
 					$column++;
 				}
@@ -208,11 +208,12 @@ class benchmark {
 
 		$expected_results = reset($this->results['return']);
 
+		$out .= "<table>";
 		foreach ($this->results['count'] as $test => $speed) {
 			$ret = $this->results['return'][$test];
 
 			$speed_str = number_format($speed);
-			$out .= "<div><b>$test</b> = $speed_str iterations per second</div>";
+			$out .= "<tr><td style=\"padding: 1px 3px; text-align: right;\"><b>$test:</b></td><td style=\"padding: 0 3px;\">$speed_str iterations per second";
 
 			if ($this->show_differences && ($ret !== $expected_results)) {
 				$out .= "<div style=\"margin: 0 0 1em 2em; \"><span style=\"color: red;\"><b>Note:</b></span> Return value from this function differs from the first test</div>\n";
@@ -221,7 +222,10 @@ class benchmark {
 			if ($this->include_sample_output) {
 				$out .= "<div style=\"margin: 0 0 1em 2em; \"><b>Sample output:</b> " . print_r($ret,true) . "</div>\n";
 			}
+
+			$out .= "</td></tr>";
 		}
+		$out .= "</table>";
 
 		print $out;
 	}
