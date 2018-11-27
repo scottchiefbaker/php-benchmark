@@ -38,8 +38,24 @@ class benchmark {
 			return false;
 		}
 
+		$use_color = 1;
+
+		if ($use_color) {
+			$red    = "\033[38;5;9m";
+			$white  = "\033[38;5;15m";
+			$blue   = "\033[38;5;51m";
+			$yellow = "\033[38;5;227m";
+			$reset  = "\033[0m";
+		} else {
+			$red    = "";
+			$white  = "";
+			$blue   = "";
+			$yellow = "";
+			$reset  = "";
+		}
+
 		$php_version = phpversion();
-		print "PHP Version: $php_version\n\n";
+		print $white . "PHP Version: $blue$php_version$reset\n\n";
 
 		arsort($this->results['count']);
 
@@ -66,7 +82,7 @@ class benchmark {
 
 		$pad_names = $test_names;
 		foreach ($pad_names as &$i) {
-			$i = sprintf("%8s",$i);
+			$i = sprintf("$yellow%8s$reset",$i);
 		}
 		print join(" | ",$pad_names) . "\n";
 
@@ -78,7 +94,7 @@ class benchmark {
 		print $bar;
 
 		foreach($test_names as $y_name) {
-			printf(" %{$max_len}s |",$y_name);
+			printf(" $yellow%{$max_len}s$reset |",$y_name);
 			foreach ($test_names as $x_name) {
 				$x_val     = $this->results['count'][$x_name];
 				$y_val     = $this->results['count'][$y_name];
@@ -87,12 +103,12 @@ class benchmark {
 				$x_name = sprintf("%8s",$x_name);
 				$col_width = strlen($x_name) + 1;
 
-				if ($y_val == $x_val) {
+				if ($y_val === $x_val) {
 					$percent = "N/A";
+					printf("$red%{$col_width}s$reset |",$percent);
+				} else {
+					printf("$white%{$col_width}s$reset |",$percent);
 				}
-
-				//printf(" %{$col_width}s",$percent);
-				printf("%{$col_width}s |","$percent");
 			}
 
 			print "\n";
@@ -125,6 +141,8 @@ class benchmark {
 				printf("%{$max_len}s = %s iterations per second\n",$name,number_format($count));
 			}
 		}
+
+		print "\n";
 	}
 
 	public function html_summary() {
