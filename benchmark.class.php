@@ -132,7 +132,11 @@ class benchmark {
 					print "    ** Return value from this function differs from the first test **\n";
 				}
 
-				$print_r_output = trim(print_r($ret,true));
+				if (is_bool($ret)) {
+					$print_r_output = $ret ? "*TRUE*" : "*FALSE*";
+				} else {
+					$print_r_output = trim(print_r($ret,true));
+				}
 
 				$print_r_output = preg_replace("/^/m","       ",$print_r_output);
 
