@@ -3,7 +3,7 @@
 class benchmark {
 	public $include_sample_output = 0; // Include sample out in HTML summary
 	public $show_differences      = 0; // Highlight if one test has diferent output than the others
-	public $test_seconds          = 1; // Time to run each test
+	public $test_seconds          = 3; // Time to run each test
 
 	private $results = array(); // Array that will store the results
 
