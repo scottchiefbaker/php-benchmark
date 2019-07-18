@@ -142,7 +142,7 @@ class benchmark {
 
 				print "    Sample output: \n$print_r_output\n\n";
 			} else {
-				printf("%{$max_len}s = %s iterations per second\n",$name,number_format($count));
+				printf("$yellow%{$max_len}s$reset = %s iterations per second\n",$name,number_format($count));
 			}
 		}
 
