@@ -16,11 +16,11 @@ $b = function($x) {
 	// Test here
 };
 
-$c = function($str) {
+$c = function($x) {
 	// Test here
 };
 
-$d = function($i) {
+$d = function($x) {
 	// Test here
 };
 
